@@ -305,3 +305,26 @@ sp.pprint(eq)
 print("The general solution of given ODE:")
 solution = sp.dsolve(eq, y)
 sp.pprint(solution)
+
+#week 3#
+def f(x):
+    return x**3 - x - 2
+def df(x):
+    return 3 * x**2
+x = float(input("Enter initial point: "))
+tol = float(input("Enter tolerance: "))
+iteration = 1
+max_iterations = 100
+while iteration <= max_iterations:
+    if df(x) == 0:
+        print("Derivative is zero. Solution cannot be found.")
+        break
+    x_new = x - (f(x) / df(x))
+    print(f"Iteration {iteration}: {x_new:.4f}")
+    if abs(x_new - x) < tol or abs(f(x_new)) < tol:
+        print("Approximate root is:", round(x_new, 4))
+        break
+    x = x_new
+    iteration += 1
+else:
+    print("Solution does not converge.")
