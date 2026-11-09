@@ -166,3 +166,50 @@ elif choice == 3:
     print(f"Decreasing time of the body after t_cal is {t_cal}")
 else:
     print("You have invalid choice")
+    
+###week 6##
+import sympy as sp
+x, y = sp.symbols('x y')
+M = sp.sympify(input("Enter M: "))
+N = sp.sympify(input("Enter N: "))
+dMy = sp.diff(M, y)
+dNx = sp.diff(N, x)
+def solve_exact(M, N):
+    F = sp.integrate(M, x)
+    G = sp.integrate(N - sp.diff(F, y), y)
+    return sp.simplify(F + G)
+# Check whether the given differential equation is exact
+if sp.simplify(dMy - dNx) == 0:
+    print("The given differential equation is Exact")
+    print("Soln :", solve_exact(M, N), "= C")
+else:
+    u = None
+    u_type = None
+    # Homogeneous differential equation integrating factor
+    if sp.simplify(sp.diff(M / (M * x + N * y), y) -
+                   sp.diff(N / (M * x + N * y), x)) == 0:
+        u = sp.simplify(1 / (M * x + N * y))
+        u_type = "The integrating factor is 1/(Mx + Ny)"
+    if u is None:
+        mu = sp.simplify(1 / (M * x - N * y))
+        if sp.simplify(sp.diff(mu * M, y) -
+                       sp.diff(mu * N, x)) == 0:
+            u = mu
+            u_type = "The integrating factor is 1/(Mx - Ny)"
+    if u is None:
+        F = sp.simplify((dMy - dNx) / N)
+        if not F.has(y):
+            u = sp.exp(sp.integrate(F, x))
+            u_type = "The integrating factor is x-dependent"
+    if u is None:
+        G = sp.simplify((dNx - dMy) / M)
+        if not G.has(x):
+            u = sp.exp(sp.integrate(G, y))
+            u_type = "The integrating factor is y-dependent"
+    if u is not None:
+        u = sp.simplify(u)
+        print("IF Type =", u_type)
+        print("Integrating Factor =", u)
+        print("Soln :", solve_exact(u * M, u * N), "= C")
+    else:
+        print("The given differential equation does not have an integrating factor")
