@@ -73,3 +73,42 @@ if choice == 1 or choice == 2:
         display(eq2)
 else:
     print("Invalid number")
+    ##WEEK12
+import matplotlib.pyplot as plt
+import numpy as np
+n = int(input("Enter sample points (n): "))
+x = np.array(list(map(float, input("Enter x values: ").split())))
+y = np.array(list(map(float, input("Enter y values: ").split())))
+if len(x) != n or len(y) != n:
+    print("ERROR: x and y must be same as n")
+    exit()
+elif np.any(x <= 0) or np.any(y <= 0):
+    print("x & y value must be positive")
+    exit()
+else:
+    # Power model: y = a * x^b
+    y_log = np.log(y)
+    x_log = np.log(x)
+    b, log_a = np.polyfit(x_log, y_log, 1)
+    a = np.exp(log_a)
+    pc = a * x ** b
+    # Exponential model: y = a * e^(bx)
+    b1, log_a1 = np.polyfit(x, y_log, 1)
+    a1 = np.exp(log_a1)
+    ec = a1 * np.exp(b1 * x)
+    # Plot power and exponential curves
+    plt.plot(x, pc, label="Power curve")
+    plt.plot(x, ec, label="Exponential")
+    plt.grid(True)
+    plt.title("Power & Exponential curve")
+    plt.xlabel("x values")
+    plt.ylabel("y values")
+    plt.legend(loc="upper left", facecolor="gray")
+    plt.scatter(
+        x,
+        y,
+        marker="o",
+        color="red",
+        label="given data"
+        )
+    plt.show()
