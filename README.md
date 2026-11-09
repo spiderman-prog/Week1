@@ -138,3 +138,31 @@ elif choice == 2:
     print(f"Amount of substance {x2} is reached at time {t2}")
 else:
     print("Enter valid choice")
+## Newton's law of cooling ##
+import math
+T0 = float(input("Enter initial temp: "))
+T1 = float(input("Enter temp after t1 time: "))
+t1 = float(input("Enter time t1: "))
+Ts = float(input("Enter surrounding temp (Ts): "))
+k = math.log((T0 - Ts) / (T1 - Ts)) / t1
+print("1. Find T2")
+print("2. Find t2")
+print("3. Both")
+choice = int(input("Enter choice (1, 2, 3): "))
+if choice == 1:
+    t2 = float(input("Enter time t2: "))
+    T2 = (T0 - Ts) * math.exp(-k * t2) + Ts
+    print(f"Temperature of the body after {t2} time is {T2}")
+elif choice == 2:
+    T2 = float(input("Enter temp of body at t2: "))
+    t2 = math.log((T0 - Ts) / (T2 - Ts)) / k
+    print(f"Decreasing time of body after t2 time is {t2}")
+elif choice == 3:
+    t_real = float(input("Enter time to calculate temperature: "))
+    T_real = (T0 - Ts) * math.exp(-k * t_real) + Ts
+    print(f"Temperature of body after {t_real} time is {T_real}")
+    T_cal = float(input("Enter temp of body after t: "))
+    t_cal = math.log((T0 - Ts) / (T_cal - Ts)) / k
+    print(f"Decreasing time of the body after t_cal is {t_cal}")
+else:
+    print("You have invalid choice")
