@@ -344,3 +344,20 @@ display(eq)
 print("The general solution of given ODE:")
 solution = sp.dsolve(eq, y)
 display(solution)
+#week 4##
+x = y = z = 0
+tol = float(input("Enter tolerance level: "))
+for i in range(50):
+    x_old, y_old, z_old = x, y, z
+    x = (12 - y_old - z_old) / 10
+    y = (13 - 2*x_old - z_old) / 10
+    z = (14 - 2*x_old - 2*y_old) / 10
+    print(f"Iteration {i+1}: x={x:.4f}, y={y:.4f}, z={z:.4f}")
+    if (abs(x_old - x) < tol and
+        abs(y_old - y) < tol and
+        abs(z_old - z) < tol):
+        break
+print("\nSolutions of the system of equations:")
+print("x =", round(x, 4))
+print("y =", round(y, 4))
+print("z =", round(z, 4))
