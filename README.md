@@ -112,3 +112,29 @@ else:
         label="given data"
         )
     plt.show()
+#week7#
+natural growth 
+import math
+x0 = float(input("Enter initial amount of substance: "))
+x1 = float(input("Enter amount of substance after t1: "))
+t1 = float(input("Enter time (t1): "))
+k = math.log(x1 / x0) / t1
+if k < 0:
+    print("Natural decay")
+elif k > 0:
+    print("Natural growth")
+else:
+    print("Neither growth nor decay")
+print("1. Amount of substance")
+print("2. Required time")
+choice = int(input("Enter choice (1, 2): "))
+if choice == 1:
+    t2 = float(input("Enter time t2: "))
+    x2 = x0 * math.exp(k * t2)
+    print(f"Amount of substance after time {t2} is {x2}")
+elif choice == 2:
+    x2 = float(input("Enter amount of substance at t2: "))
+    t2 = math.log(x2 / x0) / k
+    print(f"Amount of substance {x2} is reached at time {t2}")
+else:
+    print("Enter valid choice")
