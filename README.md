@@ -213,3 +213,61 @@ else:
         print("Soln :", solve_exact(u * M, u * N), "= C")
     else:
         print("The given differential equation does not have an integrating factor")
+
+#week5 ###
+import numpy as np
+import sympy as sp
+x, y, z = sp.symbols('x y z')
+A = []
+B = []
+n = int(input("Enter number of unknowns: "))
+for i in range(n):
+    eq = input(f"Enter equation {i+1}: ")
+    lhs, rhs = eq.split("=")
+    lhs = sp.sympify(lhs)
+    rhs = float(rhs)
+    A.append
+    lhs.coeff(x),
+        lhs.coeff(y),
+        lhs.coeff(z)
+    ])
+    B.append(rhs)
+A =np.array(A, dtype=float)
+B =np.array(B, dtype=float)
+for i in range(n):
+    diagonal = abs(A[i][i])
+    non_diagonal = sum(
+        abs(A[i][j])
+        for j in range(n)
+        if j != i
+    )
+    if diagonal <= non_diagonal:
+        print("The given system of equations is not diagonally dominant")
+        exit()
+else:
+    print("The given system of equations is diagonally dominant")
+
+# Initial approximation
+X = np.zeros(n)
+# Gauss-Seidel iteration
+for itr in range(300):
+    X_old = X.copy()
+    for i in range(n):
+        s = 0
+        for j in range(n):
+            if j != i:
+                s += A[i][j] * X[j]
+        X[i] = (B[i] - s) / A[i][i]
+    # Check convergence
+    if np.max(np.abs(X - X_old)) < 0.0001:
+        break
+else:
+    print("Solution does not converge")
+    exit()
+# Print solution
+print("\nSolution")
+print("x =", X[0])
+if n > 1:
+    print("y =", X[1])
+if n > 2:
+    print("z =", X[2])
