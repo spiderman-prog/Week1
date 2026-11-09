@@ -271,3 +271,18 @@ if n > 1:
     print("y =", X[1])
 if n > 2:
     print("z =", X[2])
+##week 1 # 
+
+import numpy as np
+r = int(input("Enter no. of rows: "))
+c = int(input("Enter no. of columns: "))
+A= np.zeros((r, c))
+print("Enter the elements of matrix A:")
+for i in range(r):
+    for j in range(c):
+        A[i][j] = float(input(f"A[{i+1}][{j+1}] = "))
+eigenvalues, eigenvectors = np.linalg.eig(A)
+print("\nEigen values:")
+print(eigenvalues)
+print("\nEigen vectors:")
+print(eigenvectors)
