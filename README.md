@@ -328,3 +328,19 @@ while iteration <= max_iterations:
     iteration += 1
 else:
     print("Solution does not converge.")
+##week 5 ##
+import sympy as sp
+x = sp.symbols('x')
+y = sp.Function('y')(x)
+order = int(input("Enter order of the DE: "))
+coeff = []
+for i in range(order + 1):
+    coeff.append(float(input(f"Enter coefficient of y[{order-i}]: ")))
+lhs = sum(coeff[i] * sp.diff(y, x, order-i)
+          for i in range(order + 1))
+rhs = sp.sympify(input("Enter rhs of the DE: "))
+eq = sp.Eq(lhs, rhs)
+display(eq)
+print("The general solution of given ODE:")
+solution = sp.dsolve(eq, y)
+display(solution)
