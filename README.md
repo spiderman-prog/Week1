@@ -186,3 +186,60 @@ SID COURSE
 STUDENT(SID, SNAME, DEPT_ID)
 SID SNAME DEPT_ID
 1 Ravi 10
+2 Kiran 20
+DEPARTMENT(DEPT_ID, DEPT_NAME)
+DEPT_ID DEPT_NAME
+10 CSE
+20 ECE
+14. MongoDB CRUD operations
+use college
+db.createCollection("student")
+// CREATE
+db.student.insertOne({sid:1,name:"Ravi",age:20,course:"BTECH"})
+db.student.insertMany([
+ {sid:2,name:"Kiran",age:21},
+ {sid:3,name:"Arun",age:22},
+ {sid:4,name:"Rahul",age:20}
+])
+// READ
+db.student.find()
+db.student.find().pretty()
+db.student.find({sid:1})
+// UPDATE
+db.student.updateOne({sid:1},{$set:{age:22}})
+db.student.updateMany({age:20},{$set:{course:"BTECH"}})
+// DELETE
+db.student.deleteOne({sid:1})
+db.student.deleteMany({age:20})
+15. MongoDB arrays, count, sort and aggregate
+A) Arrays
+db.student.insertMany([
+ {sid:1,name:"Ravi",subjects:["SQL","Python","Java"]},
+ {sid:2,name:"Kiran",subjects:["DBMS","Python"]},
+ {sid:3,name:"Arun",subjects:["Java","C"]}
+])
+db.student.find()
+db.student.find({subjects:"Python"})
+db.student.updateOne({sid:1},{$push:{subjects:"MongoDB"}})
+B) COUNT
+db.student.countDocuments()
+db.student.countDocuments({subjects:"Python"})
+C) SORT
+db.student.find().sort({name:1}) // ascending
+db.student.find().sort({name:-1}) // descending
+D) AGGREGATE
+// Count all students
+db.student.aggregate([
+ {$group:{_id:null,totalStudents:{$sum:1}}}
+])
+// Average age
+db.student.aggregate([
+ {$group:{_id:null,averageAge:{$avg:"$age"}}}
+])
+// Group by age
+db.student.aggregate([
+ {$group:{_id:"$age",total:{$sum:1}}}
+])
+// Sort
+db.student.aggregate([
+ {$sort:{name:1}}
